@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block title %} Nabídky {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div unicorn:view>
+  <div class="my-4 px-4 py-3 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
+      <div class="container">
+        <div class="row gx-lg-5 align-items-start">
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <h1 class="my-5 display-4 fw-bold ls-tight">
+              Moje aktuální
+              <span class="text-primary">nabídky</span>
+            </h1>
+          </div>
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <h1 class="my-5 display-4 fw-bold ls-tight">
+              Moje naplánované  
+              <span class="text-primary">samosběry</span>
+            </h1>
+          </div>
+        </div>
+        {% if not message %}
+        <div class="row gx-lg-5 align-items-start">
+          <div class="col-md-6 col-sm-6 mb-5 mb-lg-6">
+            <ul class="list-group">
+              <div class="justify-content-between">
+                {% for offer in offers %}
+                  <div>
+                    <li class="list-group-item list-group-item-action"><h2>{{offer.0}}</h2>
+                      
+                        <p>Celkové množství: {{offer.2}}</p>
+                        <p>Cena: {{offer.1}}</p>
+                        <a href="{% url "nabidky_change" id=offer.0.pk %}" class="btn btn-primary"><i class="bi bi-pen"></i></a>
+                        <button unicorn:click="deleteNabidka({{offer.0.pk}})"
+                                class="btn btn-sm btn-danger"><i class="bi bi-trash"></i>
+                        </button>
+                      </li>
+                  </div>
+                {% endfor %}
+                </div>
+              </ul>
+            </div>
+            <div class="col-md-6 col-sm-6 mb-5 mb-lg-6">
+              <ul class="list-group">
+                <div class="justify-content-between">
+                  {% for samosber in samosbers %}
+                    <div>
+                      <li class="list-group-item list-group-item-action"><h2>{{samosber.0}}</h2>
+                        
+                      <p>Od: {{samosber.2.zacatek}}</p>
+                      <p>Do: {{samosber.2.konec}}</p>
+                      <p>Místo: {{samosber.2.misto_konani}}</p>
+                      <p>Cena: {{samosber.1}}</p>
+                        <button unicorn:click="deleteSamosber({{samosber.0.pk}})"
+                                class="btn btn-sm btn-danger"><i class="bi bi-trash"></i>
+                        </button>
+                      </li>
+                    </div>
+                  {% endfor %}
+                </div>
+              </ul>    
+            </div>
+          </div>
+          {% else %}
+          <div class="alert alert-danger" role="alert">
+            Nemáte oprávnění vidět tuhle stránku.
+            </div> 
+          {% endif %}
+      </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %} Recenze {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<section class="">
+    <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
+      <div class="container">
+        {% if user.is_authenticated %}
+
+        <div class="d-grid gap-3">
+            <div class="text-center">
+                <h1 class="my-5 display-3 fw-bold ls-tight">Zhodnotit zakoupený <span class="text-primary">produkt</span> </h1>  
+                <p>Produkt k hodnocení: <span class="fw-bold">{{produkt.name}}</span></p>
+            </div>
+            <br>
+        </div>
+
+        <div class="container">
+            <div class="text-center">
+                <a class="btn btn-lg btn-outline-success" href="{% url "pomocna" id=produkt.id rec=5%}"><i class="bi bi-emoji-heart-eyes"></i></a>
+                <a class="btn btn-lg btn-outline-success" href="{% url "pomocna" id=produkt.id rec=4%}"><i class="bi bi-emoji-smile"></i></a>
+                <a class="btn btn-lg btn-outline-warning" href="{% url "pomocna" id=produkt.id rec=3%}"><i class="bi bi-emoji-neutral"></i></a>
+                <a class="btn btn-lg btn-outline-danger" href="{% url "pomocna" id=produkt.id rec=2%}"><i class="bi bi-emoji-frown"></i></a>
+                <a class="btn btn-lg btn-outline-danger" href="{% url "pomocna" id=produkt.id rec=1%}"><i class="bi bi-emoji-angry"></i></a>
+            </div>
+        </div>
+        {% else %}
+        <div class="alert alert-danger" role="alert">
+          Nemáte oprávnění vidět/upravovat tento profil.
+          </div> 
+        {% endif %}
+    </div>
+</div>
+
+</section>
+
+
+{% endblock %}

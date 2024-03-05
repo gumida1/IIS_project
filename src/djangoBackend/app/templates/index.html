@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% block title %} Hlavní stránka {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div unicorn:view>
+
+<section class="">
+    <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
+      <div class="container">
+        <div class="d-grid gap-3">
+            <div class="text-center">
+                <h1 class="my-5 display-3 fw-bold ls-tight">Zelný trh - <span class="text-primary">nabídka</span> </h1>  
+            </div>            
+            <div class="input-group">
+                <input type="text" id ="hodnota" value="" class="form-control" placeholder="Hledání" aria-label="Recipient's username with two button addons">
+                <a href="javascript:;" class="btn btn-info" onclick="href='http://127.0.0.1:8000/index/produkt=' + document.getElementById('hodnota').value"> Vyhledat produkt</a>
+                <a href="javascript:;" class="btn btn-info" onclick="href='http://127.0.0.1:8000/index/kategorie=' + document.getElementById('hodnota').value"> Vyhledat kategorii</a>
+                <a href="javascript:;" class="btn btn-info" onclick="href='http://127.0.0.1:8000/index/farmar=' + document.getElementById('hodnota').value"> Vyhledat farmáře</a>
+            </div>
+            {% if page_obj %}
+                {% for produkt in page_obj%}
+                <div>
+                    <li class="list-group-item list-group-item-action">
+                        <h4>{{produkt.name}}</h4>
+                        {% for samosber in samosbery %}
+                            {%if samosber.produkty.id == produkt.id%}
+                                <p><i>- samosběr</i></p>
+                            {% endif %}
+                        {% endfor %}
+
+
+                        
+
+                        {% for id, hodnota in recenze.items %}
+                            {% if id == produkt.id %}
+                                <p>Uživatelské hodnocení: {{hodnota}}/5 <i class="bi bi-star"></i></p>
+                            {% endif %} 
+                        {% endfor %}
+                        {% for hodnota in hodnoty %}  
+                            {% if produkt.id == hodnota.produkt.id %}  
+                                {% if hodnota.intHodnota != null %}
+
+                                    {% for prod, t_f in is_samosber.items %}
+                                    {% if user.is_authenticated %}    
+                                        {% if prod == produkt.id and t_f == True %} 
+                                            
+                                            {% elif prod == produkt.id and t_f == False %}
+                                                <p>Dostupné množství: {{produkt.dostupne_mnozstvi}} ks</p>                            
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    <p>Cena: {{hodnota.intHodnota}} Kč/kus</p>
+                                {% elif hodnota.floatHodnota != null %}
+                                {% for prod, t_f in is_samosber.items %}
+                                    {% if user.is_authenticated %}    
+                                        {% if prod == produkt.id and t_f == True %} 
+                                            
+                                            {% elif prod == produkt.id and t_f == False %}
+                                                <p>Dostupné množství: {{produkt.dostupne_mnozstvi}} kg</p>                            
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    <p>Cena: {{hodnota.floatHodnota}} Kč/kg</p>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        {% for prod, t_f in is_samosber.items %}
+                        {% if user.is_authenticated %}    
+                            {% if prod == produkt.id and t_f == True %} 
+                                <a href="{% url "reg" id=produkt.pk %}" class="btn btn-info" id="ref_sam">Zaregistrovat na samosběr {{produkt.name}}</a>
+                                {% elif prod == produkt.id and t_f == False %}
+                                <a href="{% url "add" id=produkt.pk %}" class="btn btn-primary" id="ref">Přidat {{produkt.name}} do košíku</a>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </li>
+                </div>
+                {% endfor %}
+                <nav aria-label="Page navigation" class="d-flex justify-content-end my-4">
+                    <ul class="pagination mb-0">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Předchozí</a>
+                            </li>
+                        {% endif %}
+                        {% for page in page_obj.paginator.get_elided_page_range %}
+                            <li class="page-item {% if page == page_obj.number %}active{% endif %}">
+                            {% if page == page_obj.paginator.ELLIPSIS %}
+                                <a href="#" class="page-link disabled">{{ page }}</a>
+                            {% else %}
+                                <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                            {% endif %}
+                            </li>
+                        {% endfor %}
+                
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="#">Následující</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% else %}
+            <div class="alert alert-warning" role="alert">
+                <h4>Nic jsme nenašli <i class="bi bi-emoji-frown-fill"></i></h4>
+              </div>
+            {% endif %}
+            
+            <br>
+        </div>
+    </div>
+</div>
+</section>
+</div>
+
+
+
+{% endblock %}

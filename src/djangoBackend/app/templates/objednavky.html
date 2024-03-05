@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %} Objednávky {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div unicorn:view>
+  <div class="my-4 px-4 py-3 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
+    <div class="container">
+      <div class="row gx-lg-5 align-items-start">
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <h1 class="my-5 display-4 fw-bold ls-tight">
+            Moje  
+            <span class="text-primary">objednávky</span>
+          </h1>
+        </div>
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <h1 class="my-5 display-4 fw-bold ls-tight">
+            Moje zaregistrované
+            <span class="text-primary">samosběry</span>
+          </h1>
+        </div>
+      </div>
+      {% if user.is_authenticated %}
+        <div class="row gx-lg-5">
+          <div class="col-md-6 col-sm-6 mb-5 mb-lg-6">
+            <ul class="list-group">
+              <div class="justify-content-between">
+                {% for order in orders %}
+                <div>
+                  {% if products %} 
+                  <li class="list-group-item list-group-item-action"><h2>Číslo objednávky: {{order.id}}</h2> <!--{{order.objednavajici}}-->                  
+                    <h4>Produkty:</h4>
+
+                  {% for product in products %}
+                  
+                  {% if order.id == product.objednavka.id %}  
+                  
+                        <p>&#x2022; {{product.produkt.name}}</p>
+                        <a class="btn btn-sm btn-info" href="{% url "recenze" id=product.produkt.pk %}">Hodnotit produkt</a>
+                      {% endif %}
+                    {% endfor %}
+
+                    {% for key, value in atr.items %}  
+                      {% if order.id == key %}  
+                        <p>Celková cena: {{value}}</p>
+                      {% endif %}
+                    {% endfor %}
+                    </li>
+                  {% endif %}  
+                </div>
+                {% endfor %}
+              </div>
+            </ul>
+          </div>
+          <div class="col-md-6 col-sm-6 mb-5 mb-lg-6">
+            <ul class="list-group">
+              <div class="justify-content-between">
+                {% for samo in samos %}  
+                <div>
+                  <li class="list-group-item list-group-item-action"><h2>{{samo.0.produkty.name}}</h2>
+                  <p>Od: {{samo.0.zacatek}}</p>
+                  <p>Do: {{samo.0.konec}}</p>
+                  <p>Místo: {{samo.0.misto_konani}}</p>
+                  <p>Cena: {{samo.1}}</p>
+                  </li>
+                </div>
+                {% endfor %}
+              </div>
+            </ul>    
+          </div>
+        </div>
+      {% else %}
+        <div class="alert alert-danger" role="alert">
+          Nemáte oprávnění vidět tuhle stránku.
+          </div> 
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

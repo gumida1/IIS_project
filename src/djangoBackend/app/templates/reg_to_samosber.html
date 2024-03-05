@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %} Zaregistrovat na samosběr {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<section class="">
+    <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
+      <div class="container">
+        <div class="d-grid gap-3">
+            <div class="text-center">
+                <h1 class="my-5 display-3 fw-bold ls-tight">Přihlásit na <span class="text-primary">samosběr</span> </h1>  
+            </div>
+            <h4>Samosběr se koná od: </h4>
+            <p>{{info_o_samo.zacatek}}</p>
+            <h4>Samosběr se koná do: </h4>
+            <p>{{info_o_samo.konec}}</p>
+            <h4>Místo konání: </h4>
+            <p>{{info_o_samo.misto_konani}}</p>
+            <hr class="hr hr-blurry" />
+            <a href="{% url "index" %}" class="btn btn-success">Závazně se zaregistrovat na samosběr</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block title %} Spraovvání kategorií {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div unicorn:view>
+    <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
+      <div class="container">
+        <div class="row gx-lg-5 align-items-center">
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <h1 class="my-5 display-3 fw-bold ls-tight">
+              Správa
+              <span class="text-primary">kategorií</span>
+            </h1>
+          </div>
+  
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <div class="card">
+              <div class="card-body py-5 px-md-5">
+                
+                {% if message %}
+                  <div class="alert alert-danger" role="alert">
+                      {{ message }}
+                  </div>    
+                {% else %}
+                  <ul class="list-group">
+                     {% for jedna, dva in categories.items %}
+
+                    <li class="list-group-item">
+        
+                      <div class="d-flex justify-content-between align-items-center">
+                          <div>
+                            <p align="left">{{jedna}}</p>
+                          </div>
+                          <div class="d-flex">
+                          <div class="p-1">
+                              {% if dva.category.validated %}
+                                  <button unicorn:click="switchmod({{dva.category.pk}})"
+                                          class="btn btn-sm btn-success">Schválena <i class="bi bi-check"></i>
+                                  </button>
+                              {% else %}
+                                  <button unicorn:click="switchmod({{dva.category.pk}})"
+                                      class="btn btn-sm btn-danger">Schválena <i class="bi bi-x"></i>
+                                  </button>
+                              {% endif %}
+                            </div>
+
+                              <div class="p-1">
+                                  <a href="{% url "edit_category" id=dva.category.pk %}" class="btn btn-primary"><i class="bi bi-pen"></i></a>
+                              </div>
+
+
+                            <div class="p-1">
+                              
+                              <button unicorn:click="deleteCategory({{dva.category.pk}})"
+                                      class="btn btn-sm btn-danger"><i class="bi bi-trash"></i>
+                              </button>
+
+                            </div>
+                          </div>
+                      </div>
+                      
+                      <ul>
+                      {% for atribute in dva.atributes %}
+                      <li>
+
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                          <p align="left">{{atribute}}</p>
+                        </div>
+                        <div class="d-flex">
+
+                            <div class="p-1">
+                                <a href="{% url "edit_atribute" id=atribute.pk %}" class="btn btn-primary"><i class="bi bi-pen"></i></a>
+                            </div>
+
+
+                          <div class="p-1">
+                            
+                            <button unicorn:click="deleteAtribute({{atribute.pk}})"
+                                    class="btn btn-sm btn-danger"><i class="bi bi-trash"></i>
+                            </button>
+
+                          </div>
+                        </div>
+                    </div>
+                  </li>
+                      {% endfor %}
+                    </ul>
+             
+                  </li>
+
+                  {% endfor %}             
+                  
+                  </ul>
+                  {% endif %}
+              
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}

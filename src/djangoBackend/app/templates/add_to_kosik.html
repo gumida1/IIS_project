@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %} Přidat do košíku {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<section class="">
+    <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
+      <div class="container">
+        <div class="d-grid gap-3">
+            <div class="text-center">
+                <h1 class="my-5 display-3 fw-bold ls-tight">Přidat do <span class="text-primary">košíku</span> </h1>  
+            </div>
+            {% if user.is_authenticated %}
+            {% if pocet != 0%}
+                <h5 class="fw-bold">Atributy:</h5>
+            {% endif %}
+            {% for name, hodnota in atributiky.items %}
+                <h7 >{{name}}: <span>{{hodnota}}</span> </h7>  
+            {% endfor %}
+            <form method="post">
+                {% csrf_token %}{{form|crispy}}
+                {% for message in messages %}
+                    <div class="alert alert-danger" role="alert">
+                        {{message}}
+                        </div> 
+                    {% endfor %}
+                <button type="submit" class="btn btn-success">Přidat</button>
+            </form>
+                <hr class="hr hr-blurry" />
+                {% else %}
+                <div class="alert alert-danger" role="alert">
+                  Nemáte oprávnění vidět/upravovat tento profil.
+                  </div> 
+                {% endif %}
+        </div>
+    </div>
+</section>
+
+
+
+{% endblock %}

@@ -1,0 +1,51 @@
+URL aplikace:
+    http://130.61.222.133:8000/index
+
+Instalace a spuštění:
+    instalace djanga:
+        pip install django
+        pip install django-unicorn
+        pip install django-crispy-forms
+        pip install crispy-bootstrap5
+        pip install psycopg2 | pip install psycopg2-binary
+        pip install django-multi-form-view
+
+    instalace databáze (postgreSQL):
+        https://www.postgresql.org/download/
+        
+        vytvoření uživatele pro připojení:
+            jméno: postgres
+            heslo: IISprojekt123,
+
+        vytvoření databáze:
+            název databáze: postgres
+            nastavit vlastníka vytvořeného v minulém kroku
+
+    Spuštění serveru:
+        python manage.py createsuperuser (vytvoření super uživatele)
+        python manage.py runserver (spuštění serveru)
+
+Uživatelé:
+    admin:
+        jméno: admin
+        heslo: IISprojekt123
+        role:  administrator
+
+    moderator:
+        jméno: moderator
+        heslo: IISprojekt123
+        role:  moderator
+    
+    Uživatelé:
+        jméno: Pepa
+        heslo: IISprojekt123
+        role:  farmář
+
+        jméno: Ivan
+        heslo: IISprojekt123
+        role:  zákazník
+
+        jméno: Marie
+        heslo: IISprojekt123
+        role:  
+

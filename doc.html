@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
+    
+    <title>Projekt IIS</title>
+    <style type="text/css">
+    	table { border-collapse: collapse; }
+    	td, th { border: 1px solid black; padding: 0.3em 0.5em; text-align: left; }
+    	dt { font-weight: bold; margin-top: 0.5em; }
+    </style>
+</head>
+<body>
+
+
+<h1>Zelny trh</h1> 
+
+<dl>
+	<dt>Autori</dt>
+	<dd>Lukas Kraus (xkraus13)
+	    <a href="mailto:xkraus13@stud.fit.vutbr.cz">xkraus13@stud.fit.vutbr.cz</a> -
+		Navrh a implementace databaze, spravovani uzivatelu a kategorii, registrace, prihlasovani, uprava profilu (informaci i hesla), vyhledavani produktu, pomahani kolegum.
+	</dd>
+	<dd>Jan Kleisl (xkleis00)
+	    <a href="mailto:xkleis00@stud.fit.vutbr.cz">xkleis00@stud.fit.vutbr.cz</a> - 
+		Vedouci tymu, navrh uzivatelskeho rozhrani aplikace, navrh databaze, vytvoreni nabidky a samosberu, hlavni stranka, recenze produktu, pomahani kolegum.
+	</dd>
+  	<dd>Jan Pryc (xprycj00)
+	    <a href="mailto:xprycj00@stud.fit.vutbr.cz">xprycj00@stud.fit.vutbr.cz</a> - 
+		Navrh uzivatelskeho rozhrani aplikace, zobrazovani a uprava nabidek a objednavek i se samosbery, zobrazovani produktu, pomahani kolegum.
+	</dd>
+	<dt>URL aplikace</dt>
+	<dd><a href="http://130.61.222.133:8000/index">http://130.61.222.133:8000/index</a></dd>
+</dl>
+
+<h2>Uzivatele systemu pro testovani</h2>
+<table>
+	<tbody><tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
+		<tr><td>admin</td><td>IISprojekt123</td><td>administrator</td></tr>
+		<tr><td>moderator</td><td>IISprojekt123</td><td>moderator</td></tr>
+		<tr><td>Pepa</td><td>IISprojekt123</td><td>farmar</td></tr>
+		<tr><td>Ivan</td><td>IISprojekt123</td><td>zakaznik</td></tr>
+		<tr><td>Marie</td><td>IISprojekt123</td><td></td></tr>
+</tbody></table>
+
+<h3>Video</h3>
+Odkaz na demonstracni video: <a href="https://youtu.be/lQmLxaJ-yGw">demonstracni video</a>
+
+<h2>Implementace</h2>
+
+<ul>
+	<li>category_approve.py - Schvalovani a spravovani kategorii.</li>
+	<li>create_offer.py - Vytvari nabidku.</li>
+	<li>edit_attribute.py - Editace atributu.</li>
+	<li>edit_category.py - Editace kategorie.</li>
+	<li>edit_moderators.py - Editace uzivatelu a udelovani prav moderatora.</li>
+	<li>edit_profile.py - Editace profilu uzivatele.</li>
+	<li>index.py - Titulni strana (vyhledavani produktu).</li>
+	<li>kosik.py - Vyrizovani objednavek.</li>
+	<li>nabidky.py - Zobrazovani nabidek a samosberu.</li>
+	<li>nabidky_change.py - uprava nabidek.</li>
+	<li>new_attribute.py - Vytvoreni atributu.</li>
+	<li>new_category.py - Vytvoreni kategorie.</li>
+	<li>objednavky.py - Zobrazovani objednavek a registrovanych samosberu.</li>
+	<li>register.py - Registrace.</li>
+  </ul>  
+  
+
+<h3>Databaze</h3>
+
+<img src="ER.png" alt="Schema relacni databaze">
+
+<h2>Instalace a spusteni</h2>
+
+<ul>
+<li>SW pozadavky</li>
+<ul>
+	<li>Python 3.9+ (testovano v Pythonu 3.10.7)</li>
+	<li>PostgreSQL 15</li>
+	<li><i>Pozn. testovano pod Windows 10 a Ubuntu 22.04 Linux</i></li>
+</ul>
+</ul>
+
+<ol>
+    <li>Instalace djanga:</li>
+	<ul>
+       <li>pip install django</li>
+	   <li>pip install django-unicorn</li>
+	   <li>pip install django-crispy-forms</li>
+	   <li>pip install crispy-bootstrap5</li>
+	   <li>pip install psycopg2 | pip install psycopg2-binary</li>
+	   <li>pip install django-multi-form-view</li>
+	</ul>
+	<li>Instalace databaze (postgreSQL):</li>
+	<ul>
+		<li>https://www.postgresql.org/download/</li>
+
+    	<ol>
+			<li>vytvoreni uzivatele pro pripojeni:</li>
+			<ul><li>jmeno: postgres</li></ul>
+			<ul><li>heslo: IISprojekt123,</li></ul>
+
+			<li>vytvoreni databaze:</li>
+				<ul><li>nazev databaze: postgres</li></ul>
+				<ul><li>nastavit vlastnika vytvoreneho v minulem kroku</li></ul>
+		</ol>
+	</ul>
+
+	<li>Spusteni serveru a vytvoreni superusera:</li>
+	<ul>
+		<li>python manage.py runserver (spusteni serveru)</li>
+		<li>python manage.py createsuperuser (vytvoreni superusera)</li>
+	</ul>
+		
+</ol>
+
+<h2>Zname problemy</h2>
+<p>Z casovych duvodu jsme nedodelali u samosberu nastaveni presneho casu pouze datumu.</p>
+
+</body></html>

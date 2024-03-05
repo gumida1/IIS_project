@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %} Můj profil {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<section class="">
+  <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
+    <div class="container">
+      <div class="row gx-lg-5 align-items-center">
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <h1 class="my-5 display-3 fw-bold ls-tight">
+            Změna
+            <span class="text-primary">údajů</span>
+          </h1>
+        </div>
+
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <div class="card">
+            <div class="card-body py-5 px-md-5">
+              {% if message %} 
+                <div class="alert alert-danger" role="alert">
+                  {{ message }}
+                </div> 
+                {% else %}
+              
+                <form method="post" enctype="multipart/form-data">
+                  <table>
+                    {% csrf_token %}
+                    {{ forms.user_form.as_p}}
+                    {{ forms.uzivatel_form.as_p}}
+                  </table>
+                                    
+                  {% for message in messages %}
+                    {% if message.tags == "warning" %}  
+                    <div class="alert alert-danger" role="alert">
+                      {{ message }}
+                    </div>   
+                  {% else %}
+                    <div class="alert alert-success" role="alert">
+                      {{ message }}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+                <button type="submit" value="submit" class="btn btn-success">Změnit údaje</button>
+                <a href="{% url "change_password" %}" class="btn btn-primary">Změnit heslo</a>
+
+              {% endif %}
+              
+              {% for xd in test %}
+                    {{xd.mnozstvi}}
+              {% endfor %}
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

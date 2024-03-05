@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %} Vytvořit nabídku {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<section class="">
+    <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
+      <div class="container">
+        <div class="d-grid gap-3">
+            <div class="text-center">
+                <h1 class="my-5 display-3 fw-bold ls-tight">Vytvořit <span class="text-primary">nabídku</span> </h1>  
+            </div>
+            {% if user.is_authenticated %}
+            <form method="post">
+
+            {% for attr in attrs %}
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder={{attr}} aria-label="Username" aria-describedby="basic-addon1" name={{attr}}>
+            </div>
+            {% endfor %}
+                <div class="input-group mb-3">
+                    {% csrf_token %}{{form|crispy}}
+                    
+                    <select name="dropdown_menu_option" class="custom-select" id="inputGroupSelect01">
+                        <option value="kus">Kč/kus</option>
+                        <option value="kg">Kč/kg</option>
+                    </select>
+                </div>
+                    <hr class="hr hr-blurry" />
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="samosber" id="flexCheckDefault" name="samosber">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Samosběr
+                        </label>
+                    </div>
+                    <hr class="hr hr-blurry" />
+                </div>
+                {% if message == "Již jste vytvořil nabídku se stejným názvem. Akci prosím opakujte s jiným názvem!" %}  
+                    <div class="alert alert-danger" role="alert">
+                        {{ message }}
+                    </div>   
+                    {% else %}
+                    {% for message in messages %}
+                    <div class="alert alert-danger" role="alert">
+                        {{message}}
+                        </div> 
+                    {% endfor %}
+                    <button type="submit" class="btn btn-success" value="Select">Vytvořit nabídku</button>
+                    {% endif %}
+            </form> 
+            {% else %}
+            <div class="alert alert-danger" role="alert">
+              Nemáte oprávnění vidět/upravovat tento profil.
+              </div> 
+            {% endif %}              
+        </div>
+    </div>
+</section>
+
+{% endblock %}

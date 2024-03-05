@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %} Košík {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div unicorn:view>
+  <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
+    <div class="container">
+      <div class="row gx-lg-5 align-items-center">
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <h1 class="my-5 display-3 fw-bold ls-tight">
+            Můj
+            <span class="text-primary">košík</span>
+          </h1>
+        </div>
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <div class="card">
+            {% if user.is_authenticated %}
+              <div class="card-body py-5 px-md-5">
+                <ul class="list-group">
+                          
+                  {% for objednavka in objednavky %}
+                    <li class="list-group-item">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                          <h4 align="left">
+                            {{objednavka.0}}
+                          </h4>
+                          <p align="left">Množství: 
+                              {{objednavka.1}}</p>
+                          <p align="left">Cena za {{objednavka.5}}: 
+                            {{objednavka.2}} Kč</p>
+                            <p align="left"><b>Cena: 
+                              {{objednavka.3}} Kč</b></p>
+                        </div>
+                        <div class="d-flex">
+                          <div class="p-1">
+                          </div>
+                          <div class="p-1">
+                              <button class="btn btn-sm btn-danger" unicorn:click="delete({{objednavka.4}})"><i class="bi bi-trash"></i></button>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+                {% if objednavky %}
+                  <h3 align="right">Celková cena: 
+                    {{celkova_cena}} Kč</h3>
+                  <div class="p-1">
+                    <button class="btn btn-sm btn-success" unicorn:click="sendObjednavka()">Odeslat objednávku</button>
+                  </div>
+                {% endif %}
+              </div>
+            {% else %}
+              <div class="alert alert-danger" role="alert">
+                Nemáte oprávnění vidět tuhle stránku.
+              </div> 
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
